@@ -1,9 +1,8 @@
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 
-void add()
+void add(PhoneBook *phonebook)
 {
-
     Contact contact;
     std::string line;
 
@@ -22,11 +21,17 @@ void add()
     std::cout << "input darkest secret: " << std::endl;
     std::cin >> line;
     contact.setDarkestSecret(line);
-    std::cout << contact.getFirstName() << std::endl;
-    std::cout << contact.getLastName() << std::endl;
-    std::cout << contact.getNickname() << std::endl;
-    std::cout << contact.getPhoneNumber() << std::endl;
-    std::cout << contact.getDarkestSecret() << std::endl;
+    phonebook->addContact(contact);
+    // std::cout << contact.getFirstName() << std::endl;
+    // std::cout << contact.getLastName() << std::endl;
+    // std::cout << contact.getNickname() << std::endl;
+    // std::cout << contact.getPhoneNumber() << std::endl;
+    // std::cout << contact.getDarkestSecret() << std::endl;
+}
+
+void search(PhoneBook *Phonebook)
+{
+    Phonebook->displayContact();
 }
 
 
@@ -35,28 +40,36 @@ void add()
 int main()
 {
     std::string command;
-    //PhoneBook phoneBook;
+    PhoneBook PhoneBook;
 
     while(1)
     {
+        std::cout << "Input ADD, SEARCH or EXIT: " << std::endl;
         std::cin >> command;
+        if(std::cin.eof())
+            break;
         if(command.compare("ADD") == 0)
         {
-            add(); 
+            add(&PhoneBook); 
         }
         else if(command.compare("SEARCH") == 0)
         {
-            //search();
+            if(PhoneBook.getIndexOld() != 0)
+                search(&PhoneBook);
+            else
+            std::cout << "ERROR" << std::endl;
         }
         else if(command.compare("EXIT") == 0)
         {
-            break;
+            std::cout << "exit" << std::endl;
+            return(0);
         }
         else
         {
             std::cout << "ERROR" << std::endl;
         }
     }
+    std::cout << "ERROR" << std::endl;
     return(0);
 
 }
