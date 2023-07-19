@@ -1,88 +1,64 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Character.cpp                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 15:27:14 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/18 19:01:18 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Character.hpp"
 
-Character::Character()
-{
-	for(int i = 0; i < 4; i++)
-		materie[i] = NULL;
-	std::cout << "Default Character constructor called" << std::endl;
-}
+Character::Character() : _name("Default") {}
 
-Character::Character(std::string const & name)
-{
-	this->name = name;
-	for(int i = 0; i < 4; i++)
-		materie[i] = NULL;
-	std::cout << "Name Character constructor called" << std::endl;
-}
-
-Character::~Character()
-{
-	for(int i = 0; i < 4; i++)
-		if (materie[i])
-			delete materie[i];
-	std::cout << "Character destructor called" <<std::endl;
-}
-
-Character::Character(Character& copy)
-{
-	*this = copy;
-	this->name = copy.getName();
-	std::cout << "Character copy constructor called" << std::endl;
-}
-
-Character& Character::operator=(Character& equals)
-{
-    for (int i = 0; i < 4; i++)
-	{
-		if (this->materie[i])
-		{
-			delete this->materie[i];
-			this->materie[i] = NULL;
-		}
-		if (equals.materie[i])
-			this->materie[i] = equals.materie[i]->clone();
+Character::Character(std::string const &name) : _name(name) {
+	for (int i = 0; i < 4; i++) {
+		this->_inventory[i] = NULL;
 	}
-	name.assign(equals.getName());
-	return (*this);
+	// std::cout << "\033[34m" << "Character: " << this->_name << " name constructor called" << "\033[0m" << std::endl;
 }
 
-std::string const & Character::getName() const
-{
-	return (name);
+Character::Character(Character const &other) : _name(other._name) {
+	*this = other;
+	// std::cout << "\033[34m" << "Character: " << this->_name << " copy constructor called" << "\033[0m" << std::endl;
 }
 
-void Character::use(int i, ICharacter& target)
-{
-	if (materie[i])
-		materie[i]->use(target);
-	else
-		std::cout << "Materia doesn't exist" << std::endl;
+Character	&Character::operator=(Character const &other) {
+	if (this != &other) {
+		this->_name = other._name;
+		for (int i = 0; i < 4; i++)
+			this->_inventory[i] = other._inventory[i];
+	}
+	return *this;
 }
 
-void Character::equip(AMateria* m)
-{
+Character::~Character() {
+	// std::cout << "\033[34m" << "Character: " << this->_name << " desctructor called" << "\033[0m" << std::endl;
 	for (int i = 0; i < 4; i++)
-		if (!materie[i])
-		{
-			materie[i] = m;
-			return ;
-		}
+		if (this->_inventory[i])
+			delete this->_inventory[i];
 }
 
-void Character::unequip(int i)
-{
-	std::cout << materie[i]->getType() << " unequipped at index " << i << std::endl;
-	materie[i] = NULL;
+void	Character::equip(AMateria *m) {
+	for (int i = 0; i < 4; i++)
+		if (this->_inventory[i] == NULL) {
+			this->_inventory[i] = m;
+			// std::cout << "\033[34m" << "Character " << this->_name << " equipped with " << m->getType() << "\033[0m" << std::endl;
+			return;
+		}
+	// std::cout << "\033[34m" << "Character " << this->_name << " can't equip " << m->getType() << "\033[0m" << std::endl;
+}
+
+void	Character::unequip(int idx) {
+	if (this->_inventory[idx]) {
+		delete this->_inventory[idx];
+		this->_inventory[idx] = NULL;
+		// std::cout << "\033[34m" << "Character " << this->_name << " unequip slot " << idx << "\033[0m" << std::endl;
+	}
+	// else
+		// std::cout << "\033[34m" << "Character " << this->_name << " can't unequip slot " << idx << "\033[0m" << std::endl;
+}
+
+void	Character::use(int idx, ICharacter &target) {
+	if (this->_inventory[idx]) {
+		this->_inventory[idx]->use(target);
+		// std::cout << "\033[34m" << "Character " << this->_name << " uses " << this->_inventory[idx]->getType() << "\033[0m" << std::endl;
+	}
+	// else
+		// std::cout << "\033[34m" << "Character " << this->_name << " can't use" << "\033[0m" << std::endl;
+}
+
+std::string const	&Character::getName() const {
+	return this->_name;
 }

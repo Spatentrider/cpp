@@ -1,50 +1,33 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   WrongAnimal.cpp                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42roma.it>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/08 11:32:49 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/08 12:37:25 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "WrongAnimal.hpp"
 
-WrongAnimal::WrongAnimal()
-{
-	std::cout << "WrongAnimal default constructor called" << std::endl;
+WrongAnimal::WrongAnimal() : _type("WrongAnimal") {
+	std::cout << "\033[1;31m" << "WrongAnimal: " << _type << " default constructor called" << "\033[0m" << std::endl;
 }
 
-WrongAnimal::~WrongAnimal()
-{
-	std::cout << "WrongAnimal destructor called" << std::endl;
+WrongAnimal::WrongAnimal(std::string type) : _type(type) {
+	std::cout << "\033[1;31m" << "WrongAnimal: " << _type << " type constructor called" << "\033[0m" << std::endl;
 }
 
-WrongAnimal::WrongAnimal(WrongAnimal &wrongAnimal)
-{
-	*this = wrongAnimal;
-	std::cout << "WrongAnimal copy constructor called" << std::endl;
+WrongAnimal::WrongAnimal(const WrongAnimal &other) {
+	std::cout << "\033[1;31m" << "WrongAnimal: " << _type << " copy constructor called" << "\033[0m" << std::endl;
+	*this = other;
 }
 
-WrongAnimal	&WrongAnimal::operator=(WrongAnimal &equals)
-{
-	this->type = equals.type;
-	return (*this);
+WrongAnimal &WrongAnimal::operator=(const WrongAnimal &other) {
+	std::cout << "\033[1;31m" << "WrongAnimal: " << _type << " copy assignment operator called" << "\033[0m" << std::endl;
+	if (this != &other)
+		this->_type = other.getType();
+	return *this;
 }
 
-std::string	WrongAnimal::getType(void) const
-{
-	return (this->type);
+WrongAnimal::~WrongAnimal() {
+	std::cout << "\033[1;31m" << "WrongAnimal: " << _type << " desctructor called" << "\033[0m" << std::endl;
 }
 
-void	WrongAnimal::setType(std::string wrongAnimalType)
-{
-	this->type = wrongAnimalType;
+void	WrongAnimal::makeSound() const {
+	std::cout << "\033[1;31m" << "WrongAnimal: " << _type << " generic sound" << "\033[0m" << std::endl;
 }
 
-void	WrongAnimal::makeSound(void) const
-{
-	std::cout << "Ragazzi, chiudete le finestre" << std::endl;
+std::string	WrongAnimal::getType() const {
+	return this->_type;
 }

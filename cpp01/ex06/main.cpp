@@ -1,27 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 12:54:06 by ffrau             #+#    #+#             */
-/*   Updated: 2022/05/30 16:20:49 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Harl.hpp"
 
-int main(int argc, char const **argv)
+int	main(int argc, char **argv)
 {
-	Harl harl;
-	
-	if (argc < 2)
+	if (argc != 2)
 	{
-		std::cout << "Correct usage: ./harl <DEBUG|INFO|WARNING|ERROR>" << std::endl;
+		std::cout << "Enter 1 parameter" << std::endl;
 		return (0);
 	}
-	
+	Harl harl;
+
 	harl.complain(argv[1]);
-	return 0;
+	return (0);
 }

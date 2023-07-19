@@ -1,48 +1,29 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Cure.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 14:43:45 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/13 16:25:43 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Cure.hpp"
 
-Cure::Cure()
-{
-	std::cout << "Default Cure constructor called" << std::endl;
-	this->_type = "cure";
+Cure::Cure() : AMateria("cure") {
+	// std::cout << "\033[33m" << "Cure: costructor called" << "\033[0m" << std::endl;
 }
 
-Cure::Cure(Cure &copy)
-{
-	std::cout << "Copy Cure constructor called" << std::endl;
-	*this = copy;
+Cure::Cure(Cure const &src) : AMateria("cure") {
+	*this = src;
+	// std::cout << "\033[33m" << "Cure: copy constructor called" << "\033[0m" << std::endl;
 }
 
-Cure::~Cure()
-{
-	std::cout << "Cure Destructor called" << std::endl;
+Cure	&Cure::operator=(const Cure &other) {
+	if (this != &other) {
+		this->_type = other._type;
+	}
+	return *this;
 }
 
-Cure &Cure::operator=(Cure &equals)
-{
-	this->_type = equals._type;
-	return (*this);
+Cure::~Cure() {
+	// std::cout << "\033[33m" << "Cure: desctructor called" << "\033[0m" << std::endl;
 }
 
-Cure*	Cure::clone() const
-{
-	Cure	*cure = new Cure();
-
-	return (cure);
+AMateria	*Cure::clone() const {
+	return (new Cure(*this));
 }
 
-void	Cure::use(ICharacter& target)
-{
-	std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl;
+void	Cure::use( ICharacter &target ) {
+	std::cout << "\033[33m" << "* heals " << target.getName() << "'s wounds *" << "\033[0m" << std::endl;
 }

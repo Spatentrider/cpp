@@ -1,41 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/01 10:31:11 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/02 13:06:01 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
+#include <iostream>
 #include "Point.hpp"
 
-bool	bsp(Point const a, Point const b, Point const c, Point const point);
-
-int	main(void)
+int main()
 {
-	std::cout << std::boolalpha
+	Point a(0.0, 0.0);
+	Point b(1.0, 0.0);
+	Point c(0.0, 1.0);
+	Point p1(0.4, 0.4);
+	Point p2(2.0, 2.0);
 
-		<< "a(0, 0), b(0, 5), c(5, 0), point(1, 1): "
-		<< bsp(Point(0, 0), Point(0, 5), Point(5, 0), Point(1, 1)) << std::endl
+	std::cout << "Is point p1 inside the triangle? " << bsp(a, b, c, p1) << std::endl;
+	std::cout << "Is point p2 inside the triangle? " << bsp(a, b, c, p2) << std::endl;
 
-		<< "a(0, 0), b(0, 5), c(5, 0), point(0, 5): "
-		<< bsp(Point(0, 0), Point(0, 5), Point(5, 0), Point(0, 5)) << std::endl
-
-		<< "a(0, 0), b(0, 5), c(5, 0), point(0, 3): "
-		<< bsp(Point(0, 0), Point(0, 5), Point(5, 0), Point(0, 3)) << std::endl
-
-		<< "a(0, 0), b(0, 5), c(5, 0), point(0, 0): "
-		<< bsp(Point(0, 0), Point(0, 5), Point(5, 0), Point(0, 0)) << std::endl
-
-		<< "a(0, 0), b(0, 5), c(5, 0), point(0.1, 0.01): "
-		<< bsp(Point(0, 0), Point(0, 5), Point(5, 0), Point(0.1f, 0.01f)) << std::endl
-
-		<< "a(0, 0), b(0, 5), c(5, 0), point(10, 0.01): "
-		<< bsp(Point(0, 0), Point(0, 5), Point(5, 0), Point(10, 0.01f)) << std::endl
-
-		<< "a(0, 0), b(0, 5), c(5, 0), point(0, -0.01): "
-		<< bsp(Point(0, 0), Point(0, 5), Point(5, 0), Point(0, -0.01f)) << std::endl;
+	return 0;
 }

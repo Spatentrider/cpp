@@ -1,41 +1,29 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   WrongCat.cpp                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42roma.it>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/08 11:45:43 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/08 12:37:44 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "WrongCat.hpp"
 
-WrongCat::WrongCat()
-{
-	setType("WrongCat");
-	std::cout << "WrongCat constructor called" << std::endl;
+WrongCat::WrongCat() : WrongAnimal("WrongCat") {
+	std::cout << "\033[1;31m" << _type << " constructor called " << "\033[0m" << std::endl;
 }
 
-WrongCat::WrongCat(WrongCat &wrongCat)
-{
-	*this = wrongCat;
-	std::cout << "WrongCat copy constructor called" << std::endl;
+WrongCat::WrongCat(std::string type) : WrongAnimal(type) {
+	std::cout << "\033[1;31m" << type << " type constructor called" << "\033[0m" << std::endl;
 }
 
-WrongCat::~WrongCat()
-{
-	std::cout << "WrongCat destructor called" << std::endl;
+WrongCat::WrongCat(const WrongCat &other) {
+	std::cout << "\033[1;31m" << _type << " copy costructor called" << "\033[0m" << std::endl;
+	*this = other;
 }
 
-WrongCat &WrongCat::operator=(WrongCat &equals)
-{
-	this->type = equals.type;
-	return (*this);
+WrongCat::~WrongCat() {
+	std::cout << "\033[1;31m" << _type << " desctructor called" << "\033[0m" << std::endl;
 }
 
-void	WrongCat::makeSound() const
-{
-	std::cout << "Woof woof" << std::endl;
+WrongCat &WrongCat::operator=(const WrongCat &other) {
+	std::cout << "\033[1;31m" << _type << " copy assignment operator called" << "\033[0m" << std::endl;
+	if (this != &other)
+		this->_type = other.getType();
+	return *this;
+}
+
+void	WrongCat::makeSound() const {
+	std::cout << "\033[1;31m" << _type << ": Miaawww!!!" << "\033[0m" << std::endl;
 }

@@ -1,48 +1,57 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/08 11:47:23 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/10 14:22:42 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
+#include "Animal.hpp"
 #include "Cat.hpp"
-#include "WrongCat.hpp"
 #include "Dog.hpp"
-
-#define RED "\033[31m"
-#define NONE "\033[0m"
-#define GREEN "\033[32m"
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
 
 int main()
 {
-	std::cout << RED << "**** Constructor ****" << NONE << std::endl;
+	std::cout << "\033[32m" << "\nCreating Animal Classes" << "\033[0m" << std::endl;
+	std::cout << "\033[32m" << "--------------------------------------" << "\033[0m" << std::endl;
 	const Animal* meta = new Animal();
 	const Animal* j = new Dog();
 	const Animal* i = new Cat();
-	const WrongAnimal* evilAldo = new WrongAnimal();
-	const WrongAnimal* evilCat = new WrongCat();
-	
-	std::cout << RED << "**** Testing ****  " << NONE << std::endl;
-	std::cout << GREEN << "**** Types ****  " << NONE << std::endl;
+	const WrongAnimal* wrong_animal = new WrongAnimal();
+	const WrongAnimal* wrong_cat = new WrongCat;
+	std::cout << "\033[32m" << "--------------------------------------" << "\033[0m" << std::endl;
+
+	std::cout << "\033[32m" << "\nDisplaing varius type" << "\033[0m" << std::endl;
+	std::cout << "\033[32m" << "--------------------------------------" << "\033[0m" << std::endl;
 	std::cout << j->getType() << " " << std::endl;
 	std::cout << i->getType() << " " << std::endl;
-	
-	std::cout << GREEN << "**** Sounds ****  " << NONE << std::endl;
-	i->makeSound();
+	std::cout << wrong_animal->getType() << " " << std::endl;
+	std::cout << wrong_cat->getType() << " " << std::endl;
+	std::cout << "\033[32m" << "--------------------------------------" << "\033[0m" << std::endl;
+
+	std::cout << "\033[32m" << "\nMaking sounds" << "\033[0m" << std::endl;
+	std::cout << "\033[32m" << "--------------------------------------" << "\033[0m" << std::endl;
+	i->makeSound(); //will output the cat sound!
 	j->makeSound();
 	meta->makeSound();
-	evilAldo->makeSound();
-	evilCat->makeSound();
+	wrong_animal->makeSound();
+	wrong_cat->makeSound();
+	std::cout << "\033[32m" << "--------------------------------------" << "\033[0m" << std::endl;
 
-	std::cout << RED << "**** Destructor ****" << NONE << std::endl;
-	delete meta;
-	delete j;
-	delete i;
-	delete evilAldo;
-	delete evilCat;
+	std::cout << "\033[32m" << "\nDeleting Animal Classes" << "\033[0m" << std::endl;
+	std::cout << "\033[32m" << "--------------------------------------" << "\033[0m" << std::endl;
+	delete(meta);
+	delete(i);
+	delete(j);
+	delete(wrong_animal);
+	delete(wrong_cat);
+	std::cout << "\033[32m" << "--------------------------------------" << "\033[0m" << std::endl;
+	return 0;
 }
+
+// int main()
+// {
+// 	const Animal* meta = new Animal();
+// 	const Animal* j = new Dog();
+// 	const Animal* i = new Cat();
+// 	std::cout << j->getType() << " " << std::endl;
+// 	std::cout << i->getType() << " " << std::endl;
+// 	i->makeSound(); //will output the cat sound!
+// 	j->makeSound();
+// 	meta->makeSound();
+// 	return 0;
+// }

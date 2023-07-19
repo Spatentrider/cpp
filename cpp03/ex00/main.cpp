@@ -1,38 +1,21 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 17:40:19 by ltorrean          #+#    #+#             */
-/*   Updated: 2022/06/06 17:31:13 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ClapTrap.hpp"
 
-int main( void )
-{
-	std::cout << RED << "**** Constructor ****" << NONE << std::endl;
-	ClapTrap a("Foo");
-	ClapTrap b;
+int main() {
+	ClapTrap clapTrap("Clappy");
 
-	std::cout << RED << "**** Testing ****  " << NONE << std::endl;
+	clapTrap.attack("enemy");
+	clapTrap.takeDamage(5);
+	clapTrap.beRepaired(3);
 
-	b.beRepaired(3);
-	b.takeDamage(2);
-	b.beRepaired(3);
-	for (int i = 0; i < 11; i++)
-		b.attack("Elisabeth");
-	b.addEnergyPoint(10);
-	for (int i = 0; i < 3; i++)
-		b.attack("Elisabeth");
-	b.beRepaired(3);
-	a.attack("Luca");
-	a.takeDamage(100);
-	a.takeDamage(10);
-	a.beRepaired(5);
-	a.attack("Pippo");
-	std::cout << RED << "**** Destructor ****" << NONE << std::endl;
+	ClapTrap clapTrap2 = clapTrap;
+	clapTrap2.attack("enemy");
+	clapTrap2.takeDamage(2);
+	clapTrap2.beRepaired(1);
+
+	ClapTrap clapTrap3("Another ClapTrap");
+	clapTrap3.attack("enemy");
+	clapTrap3.takeDamage(4);
+	clapTrap3.beRepaired(2);
+
+	return 0;
 }

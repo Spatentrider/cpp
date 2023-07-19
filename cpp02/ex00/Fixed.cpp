@@ -1,49 +1,37 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Fixed.cpp                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/01 11:51:54 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/01 11:57:33 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Fixed.hpp"
 
-Fixed::Fixed()
+Fixed::Fixed() : _fixed_point_number(0)
 {
 	std::cout << "Default constructor called" << std::endl;
-	this->_numberValue = 0;
 }
 
-Fixed::Fixed(Fixed &fixed)
+Fixed::Fixed(const Fixed &other)
 {
 	std::cout << "Copy constructor called" << std::endl;
-	*this = fixed;
+	this->setRawBits(other.getRawBits());
+}
+
+Fixed &Fixed::operator=(const Fixed &other)
+{
+	std::cout << "Copy assignment operator called" << std::endl;
+	if (this != &other)
+		this->_fixed_point_number = other.getRawBits();
+	return *this;
 }
 
 Fixed::~Fixed()
 {
-    std::cout << "Destructor called" << std::endl;
+	std::cout << "Destructor called" << std::endl;
 }
 
-Fixed& Fixed::operator=(const Fixed &fixed)
-{
-	std::cout << "Copy assignment operator called" << std::endl;
-	_numberValue = fixed.getRawBits();
-	return (*this);
-}
-
-
-int	Fixed::getRawBits(void) const
+int		Fixed::getRawBits(void) const
 {
 	std::cout << "getRawBits member function called" << std::endl;
-	return (this->_numberValue);
+	return this->_fixed_point_number;
+
 }
 
 void	Fixed::setRawBits(int const raw)
 {
-	this->_numberValue = raw;
+	this->_fixed_point_number = raw;
 }

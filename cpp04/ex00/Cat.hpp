@@ -1,30 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/08 11:41:39 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/19 13:14:02 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef CAT_HPP
-#define CAT_HPP
+# define CAT_HPP
 
-#include "Animal.hpp"
+# include "Animal.hpp"
 
-class Cat : public Animal
-{
+class Cat : public Animal {
 	public:
-		void	makeSound(void) const;
-
 		Cat();
-		Cat(Cat &cat);
+		Cat( const Cat &other );
 		~Cat();
+		Cat &operator=( const Cat &other );
 
-		Cat &operator=(Cat &equals);
+		virtual void	makeSound() const;
 };
 
 #endif

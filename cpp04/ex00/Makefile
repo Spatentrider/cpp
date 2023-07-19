@@ -1,53 +1,20 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/06/03 15:52:34 by ffrau             #+#    #+#              #
-#    Updated: 2022/06/14 11:39:03 by ffrau            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME	= Animal
+CC		= c++
+CFLAG	= -std=c++98 -Wall -Wextra -Werror
+SRCS	= main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp
+OBJS	= $(SRCS:.cpp=.o)
 
-NAME			= polymorphism
+all: $(NAME)
 
-CC				= clang++
-CFLAGS			= -Wall -Wextra -Werror -std=c++98
-
-SRCS			=	main.cpp		\
-					Animal.cpp		\
-					Cat.cpp			\
-					Dog.cpp			\
-					WrongAnimal.cpp	\
-					WrongCat.cpp	\
-
-OBJ				= $(SRCS:.cpp=.o)
-
-%.o:			%.cpp
-				@$(CC) $(CFLAGS) -g -c $< -o $@
-
-RM				= rm -rf
-
-$(NAME):		$(OBJ)
-				$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
-
-all:			$(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(CFLAG) -o $(NAME) $(OBJS)
 
 clean:
-				$(RM) $(OBJ)
+	rm -f $(OBJS)
 
-fclean:			clean
-				$(RM) $(NAME)
+fclean: clean
+	rm -f $(NAME)
 
-re:				fclean $(NAME)
+re: fclean all
 
-run:			$(NAME)
-				./$(NAME)
-				make fclean -C ./
-
-leaks:			$(NAME)
-				leaks --atExit -- ./$(NAME)
-				make fclean -C ./
-
-.PHONY:			all clean fclean re
+.PHONY: all clean fclean re

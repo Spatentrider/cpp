@@ -1,151 +1,44 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   DiamondTrap.cpp                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/06 18:32:12 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/13 16:13:09 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "DiamondTrap.hpp"
 
-DiamondTrap::DiamondTrap(std::string name) : FragTrap(name + "_clap_name")
+#include <iostream>
+
+DiamondTrap::DiamondTrap() {
+	this->_name = "DiamondTrap";
+	this->ClapTrap::_name = std::string("DiamondTrap").append("_clap_name");
+	this->_hp = FragTrap::_hp;
+	this->_energy = ScavTrap::_energy;
+	this->_attack = FragTrap::_attack;
+}
+
+DiamondTrap::DiamondTrap(std::string name) : ClapTrap(name + "_clap_name"), FragTrap(name), ScavTrap(name)
 {
-	this->_maxEnergyPoints = ScavTrap::getMaxEnergyPoints();
-	this->_energyPoints = this->_maxEnergyPoints;
 	this->_name = name;
-	std::cout << "DiamondTrap Name constructor called" << std::endl;
+	this->_hp = this->FragTrap::_hp;
+	this->_energy = this->ScavTrap::_energy;
+	this->_attack = this->FragTrap::_attack;
+	std::cout << "\033[34m" << _name << ">> A new DiamondTrap named " << _name << " has been created!" << "\033[0m" << std::endl;
 }
 
-DiamondTrap::DiamondTrap() : FragTrap("ppunzo_clap_name")
-{
-	this->_maxEnergyPoints = ScavTrap::getMaxEnergyPoints();
-	this->_energyPoints = this->_maxEnergyPoints;
-	this->_name = "ppunzo";
-	std::cout << "DiamondTrap Default constructor called" << std::endl;
+DiamondTrap::DiamondTrap(const DiamondTrap& other) {
+	*this = other;
+
+	std::cout << "\033[34m" << _name << ">> DiamondTrap " << this->_name << " copied!" << "\033[0m" << std::endl;
 }
 
-DiamondTrap::DiamondTrap(DiamondTrap& DiamondTrap)
-{
-	*this = DiamondTrap;
-	std::cout << "DiamondTrap Copy constructor called" << std::endl;
+DiamondTrap::~DiamondTrap() {
+	std::cout << "\033[34m" << _name << ">> The DiamondTrap named " << _name << " has been destroyed!" << "\033[0m" << std::endl;
 }
 
-DiamondTrap::~DiamondTrap()
+DiamondTrap& DiamondTrap::operator=(const DiamondTrap& other)
 {
-	std::cout << "DiamondTrap Destructor called" << std::endl;
-}
-
-DiamondTrap& DiamondTrap::operator=(DiamondTrap& equals)
-{
-	this->_name = equals._name;
-	this->_hitPoints = equals._hitPoints;
-	this->_energyPoints = equals._energyPoints;
-	this->_attackDamage = equals._attackDamage;
-	return (*this);
-}
-
-int	DiamondTrap::getMaxEnergyPoints(void)
-{
-	return (this->_maxEnergyPoints);
-}
-
-int	DiamondTrap::getEnergyPoint(void)
-{
-	return (this->_energyPoints);
-}
-
-void	DiamondTrap::attack(std::string const & target)
-{
-	if (!getEnergyPoint() || !getHitPoint())
-	{
-		std::cout << "No energy or hit point left" << std::endl;
-		return ;
+	if (this != &other) {
+		ClapTrap::operator=(other);
+		this->_name = other._name;
 	}
-	else
-		this->_energyPoints--;
-	ScavTrap::attack(target);
+	std::cout << "\033[34m" << _name << ">> DiamondTrap " << _name << " assigned!" << "\033[0m" << std::endl;
+	return *this;
 }
 
-void	DiamondTrap::whoAmI()
-{
-	std::cout << "My name is " << this->_name << " and my ClapTrap name is " << ClapTrap::_name << std::endl;
-}/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   DiamondTrap.cpp                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/06 18:32:12 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/13 16:09:10 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "DiamondTrap.hpp"
-
-DiamondTrap::DiamondTrap(std::string name) : FragTrap(name + "_clap_name")
-{
-	this->_maxEnergyPoints = ScavTrap::getMaxEnergyPoints();
-	this->_energyPoints = this->_maxEnergyPoints;
-	this->_name = name;
-	std::cout << "DiamondTrap Name constructor called" << std::endl;
-}
-
-DiamondTrap::DiamondTrap() : FragTrap("ppunzo_clap_name")
-{
-	this->_maxEnergyPoints = ScavTrap::getMaxEnergyPoints();
-	this->_energyPoints = this->_maxEnergyPoints;
-	this->_name = "ppunzo";
-	std::cout << "DiamondTrap Default constructor called" << std::endl;
-}
-
-DiamondTrap::DiamondTrap(DiamondTrap& DiamondTrap)
-{
-	*this = DiamondTrap;
-	std::cout << "DiamondTrap Copy constructor called" << std::endl;
-}
-
-DiamondTrap::~DiamondTrap()
-{
-	std::cout << "DiamondTrap Destructor called" << std::endl;
-}
-
-DiamondTrap& DiamondTrap::operator=(DiamondTrap& equals)
-{
-	this->_name = equals._name;
-	this->_hitPoints = equals._hitPoints;
-	this->_energyPoints = equals._energyPoints;
-	this->_attackDamage = equals._attackDamage;
-	return (*this);
-}
-
-int	DiamondTrap::getMaxEnergyPoints(void)
-{
-	return (this->_maxEnergyPoints);
-}
-
-int	DiamondTrap::getEnergyPoint(void)
-{
-	return (this->_energyPoints);
-}
-
-void	DiamondTrap::attack(std::string const & target)
-{
-	if (!getEnergyPoint() || !getHitPoint())
-	{
-		std::cout << "No energy or hit point left" << std::endl;
-		return ;
-	}
-	else
-		this->_energyPoints--;
-	ScavTrap::attack(target);
-}
-
-void	DiamondTrap::whoAmI()
-{
-	std::cout << "My name is " << this->_name << " and my ClapTrap name is " << ClapTrap::_name << std::endl;
+void DiamondTrap::whoAmI() const {
+	std::cout << "\033[34m" << "I am " << this->_name << ", my ClapTrap name is " << this->ClapTrap::_name << "\033[0m" << std::endl;
 }

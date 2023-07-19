@@ -1,73 +1,29 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   FragTrap.cpp                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/06 16:50:35 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/06 17:35:20 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "FragTrap.hpp"
 
-FragTrap::FragTrap()
-{
-	this->_hitPoints = this->_maxHitPoints;
-	this->_energyPoints = this->_maxEnergyPoints;
-	this->_attackDamage = this->_maxAttackDamage;
-	this->_name = "ppunzo";
-	std::cout << "FragTrap Default constructor called" << std::endl;
+FragTrap::FragTrap(std::string name) : ClapTrap(name) {
+	_hp = 100;
+	_energy = 100;
+	_attack = 30;
+	std::cout << "\033[1;33m" << _name << ">> A new FragTrap named " << _name << " has been created!" << "\033[0m" << std::endl;
 }
 
-FragTrap::FragTrap(std::string name)
-{
-	this->_hitPoints = this->_maxHitPoints;
-	this->_energyPoints = this->_maxEnergyPoints;
-	this->_attackDamage = this->_maxAttackDamage;
-	this->_name = name;
-	std::cout << "FragTrap Name constructor called" << std::endl;
+FragTrap::FragTrap(const FragTrap& other) : ClapTrap(other) {
+	std::cout << "\033[1;33m" << _name << ">> FragTrap " << this->_name << " copied!" << "\033[0m" << std::endl;
 }
 
-FragTrap::FragTrap(FragTrap& FragTrap)
-{
-	*this = FragTrap;
-	std::cout << "FragTrap Copy constructor called" << std::endl;
+FragTrap::~FragTrap() {
+	std::cout << "\033[1;33m" << _name << ">> The FragTrap named " << _name << " has been destroyed!" << "\033[0m" << std::endl;
 }
 
-FragTrap::~FragTrap()
-{
-	std::cout << "FragTrap Destructor called" << std::endl;
-	return ;
+FragTrap& FragTrap::operator=(const FragTrap& other) {
+	_name = other._name;
+	_hp = other._hp;
+	_energy = other._energy;
+	_attack = other._attack;
+	std::cout << "\033[1;33m" << _name << ">> FragTrap " << _name << " assigned!" << "\033[0m" << std::endl;
+	return *this;
 }
 
-FragTrap& FragTrap::operator=(FragTrap& equals)
-{
-	this->_name = equals._name;
-	this->_hitPoints = equals._hitPoints;
-	this->_energyPoints = equals._energyPoints;
-	this->_attackDamage = equals._attackDamage;
-	return (*this);
-}
-
-void	FragTrap::highFivesGuys(void)
-{
-	std::cout << RED << "GIVE ME A FIVE! " << YELLOW << std::endl;
-	std::cout << "           ___..__" << std::endl;
-	std::cout << "  __..--\"\"\" ._ __.'" << std::endl;
-	std::cout << "              \"-..__" << std::endl;
-	std::cout << "            '\"--..__\";" << std::endl;
-	std::cout << " ___        '--...__\"\";" << std::endl;
-	std::cout << "    `-..__ '\"---..._;\"" << std::endl;
-	std::cout << "          \"\"\"\"----'  " << CYAN << "_.-._" << std::endl;
-	std::cout << "                    | | | |_" << std::endl;
-	std::cout << "                    | | | | |" << std::endl;
-	std::cout << "                    | | | | |" << std::endl;
-	std::cout << "                  _ |  '-._ |" << std::endl;
-	std::cout << "                  \\`\\`-.'-._;" << std::endl;
-	std::cout << "                   \\    '   |" << std::endl;
-	std::cout << "                    \\  .`  /" << std::endl;
-	std::cout << "                     |    | "<< NONE << std::endl;
-	
+void FragTrap::highFivesGuys(void) {
+	std::cout << "\033[1;33m" << "Gimme five!" << "\033[0m" << std::endl;
 }

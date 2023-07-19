@@ -1,41 +1,24 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 17:40:19 by ltorrean          #+#    #+#             */
-/*   Updated: 2022/06/06 17:31:32 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
+#include "ClapTrap.hpp"
 #include "ScavTrap.hpp"
 
-int main( void )
+int main()
 {
-	std::cout << RED << "**** Constructor ****" << NONE << std::endl;
-	ClapTrap a("Pippo");
-	ClapTrap b;
-	ScavTrap c("Pluto");
-	ScavTrap d("vbeffa");
+	ClapTrap c1("Clap1");
+	c1.attack("Enemy1");
+	c1.beRepaired(5);
+	c1.takeDamage(15);
 
-	std::cout << RED << "**** Testing ****  " << NONE << std::endl;
+	ScavTrap s1("Scav1");
+	s1.attack("Enemy1");
+	s1.beRepaired(5);
+	s1.takeDamage(15);
+	s1.guardGate();
 
-	a.attack(b.getName());
-	b.takeDamage(a.getAttackDamage());
+	ScavTrap s2(s1);
+	s2.attack("Enemy2");
+	s2 = s1;
+	s2.beRepaired(10);
+	s2.guardGate();
 
-	b.attack(c.getName());
-	c.takeDamage(b.getAttackDamage());
-
-	d.attack(a.getName());
-	a.takeDamage(d.getAttackDamage());
-
-	a.beRepaired(2);
-	b.beRepaired(3);
-	c.beRepaired(4);
-
-	d.guardGate();
-	d.guardGate();
-	std::cout << RED << "**** Destructor ****" << NONE << std::endl;
+	return 0;
 }

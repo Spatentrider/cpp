@@ -1,70 +1,29 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Cat.cpp                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/08 11:45:43 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/18 22:34:52 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Cat.hpp"
 
-Cat::Cat()
-{
-	setType("Cat");
-	this->_brain = new Brain();
-	std::cout << "Cat constructor called" << std::endl;
+Cat::Cat() : Animal("Cat") {
+	std::cout << "\033[1;33m" << "Cat   : " << _type << " constructor called " << "\033[0m" <<std::endl;
+	_brain = new Brain();
 }
 
-Cat::Cat(Cat &cat)
-{
-	*this = cat;
-	this->_brain = new Brain(*cat.getBrain());
-	std::cout << "Cat copy constructor called" << std::endl;
+Cat::Cat(const Cat &other) {
+	std::cout << "\033[1;33m" << "Cat   : " << _type << " copy costructor called" << "\033[0m" << std::endl;
+	*this = other;
 }
 
-Cat::~Cat()
-{
-	delete[] this->_brain;
-	std::cout << "Cat destructor called" << std::endl;
+Cat::~Cat() {
+	std::cout << "\033[1;33m" << "Cat   : " << _type << " desctructor called" << "\033[0m" << std::endl;
+	delete(_brain);
 }
 
-Cat &Cat::operator=(Cat &equals)
-{
-	this->type = equals.type;
-	this->_brain = equals._brain;
-	return (*this);
+Cat &Cat::operator=(const Cat &other) {
+	std::cout << "\033[1;33m" << "Cat   : " << _type << " copy assignment operator called" << "\033[0m" << std::endl;
+	if (this != &other) {
+		this->_type = other.getType();
+		this->_brain = new Brain(*other._brain);
+	}
+	return *this;
 }
 
-void	Cat::makeSound() const
-{
-	std::cout << "Meow meow" << std::endl;
-}
-
-Brain	*Cat::getBrain()
-{
-	return (this->_brain);
-}
-
-void	Cat::setIdeas(std::string idea)
-{
-	return (this->_brain->setIdeas(idea));
-}
-
-void	Cat::setIdea(std::string idea, unsigned int index)
-{
-	return (this->_brain->setIdea(idea, index));
-}
-
-std::string	Cat::getIdea(int index)
-{
-	return (this->_brain->getIdea(index));
-}
-
-std::string	*Cat::getIdeas()
-{
-	return (this->_brain->getIdeas());
+void	Cat::makeSound() const {
+	std::cout << "\033[1;33m" << "Cat   : " << _type << ": Miaawww!!!" << "\033[0m" << std::endl;
 }

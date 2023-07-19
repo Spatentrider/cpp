@@ -1,105 +1,40 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ScavTrap.cpp                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/06 16:50:52 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/07 12:47:38 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ScavTrap.hpp"
 
-ScavTrap::ScavTrap()
-{
-	this->_isInKeeperMode = false;
-	this->_hitPoints = this->_maxHitPoints;
-	this->_energyPoints = this->_maxEnergyPoints;
-	this->_attackDamage = this->_maxAttackDamage;
-	this->_name = "ppunzo";
-	std::cout << "ScavTrap Default constructor called" << std::endl;
-}
+ScavTrap::ScavTrap() {}
 
 ScavTrap::ScavTrap(std::string name)
-{
-	this->_isInKeeperMode = false;
-	this->_hitPoints = this->_maxHitPoints;
-	this->_energyPoints = this->_maxEnergyPoints;
-	this->_attackDamage = this->_maxAttackDamage;
-	this->_name = name;
-	std::cout << "ScavTrap Name constructor called" << std::endl;
+	: ClapTrap(name) {
+	_hp = 100;
+	_energy = 50;
+	_attack = 20;
+	std::cout << "\033[1;31m" << _name << ">> A new ScavTrap named " << _name << " has been created!" << "\033[0m" << std::endl;
 }
 
-ScavTrap::ScavTrap(ScavTrap& scavTrap)
-{
-	*this = scavTrap;
-	std::cout << "ScavTrap Copy constructor called" << std::endl;
+ScavTrap::ScavTrap(const ScavTrap& other) : ClapTrap(other) {
+	std::cout << "\033[1;31m" << _name << ">> ScavTrap " << this->_name << " copied!" << "\033[0m" << std::endl;
 }
 
-ScavTrap::~ScavTrap()
-{
-	std::cout << "ScavTrap Destructor called" << std::endl;
-	return ;
+ScavTrap::~ScavTrap() {
+	std::cout << "\033[1;31m" << _name << ">> The ScavTrap named " << _name << " has been destroyed!" << "\033[0m" << std::endl;
 }
 
-ScavTrap& ScavTrap::operator=(ScavTrap& equals)
-{
-	this->_name = equals._name;
-	this->_hitPoints = equals._hitPoints;
-	this->_energyPoints = equals._energyPoints;
-	this->_attackDamage = equals._attackDamage;
-	return (*this);
-}
-
-void	ScavTrap::attack(const std::string& target)
-{
-	if (!getEnergyPoint() || !getHitPoint())
-	{
-		std::cout << "No energy or hit point left" << std::endl;
-		return ;
+ScavTrap& ScavTrap::operator=(const ScavTrap& other) {
+	if (this != &other) {
+		ClapTrap::operator=(other);
 	}
-	else
-		this->_energyPoints--;
-	this->_attackDamage += 1;
-	std::cout << "ScavTrap " << getName() << " attacks " << target
-	<< ", causing " << getAttackDamage() << " points of damage!" 
-	<< std::endl;
+	std::cout << "\033[1;31m" << _name << ">> ScavTrap " << _name << " assigned!" << "\033[0m" << std::endl;
+	return *this;
 }
 
-bool	ScavTrap::getKeeperMode()
+void ScavTrap::attack(const std::string& target) const
 {
-	return this->_isInKeeperMode;
-}
-
-void	ScavTrap::setKeeperMode(bool keeper)
-{
-	this->_isInKeeperMode = keeper;
-}
-
-void	ScavTrap::guardGate()
-{
-	if (getKeeperMode())
-		std::cout << "You already are in keeper mode" << std::endl;
-	else
-	{
-		std::cout << "You are now in keeper mode" << std::endl;
-		setKeeperMode(true);
+	if (_energy < 1) {
+		std::cout << "\033[1;31m" << _name << ">> ScavTrap " << _name << " has no energy left to attack!" << "\033[0m" << std::endl;
+		return;
 	}
+	std::cout << "\033[1;31m" << _name << ">> ScavTrap " << _name << " attacks " << target << " for " << _attack << " points of damage!" << "\033[0m" << std::endl;
 }
 
-int	ScavTrap::getMaxAttackDamage(void)
-{
-	return (this->_maxAttackDamage);
-}
-
-int	ScavTrap::getMaxEnergyPoints(void)
-{
-	return (this->_maxEnergyPoints);
-}
-
-int	ScavTrap::getMaxHitPoint(void)
-{
-	return (this->_maxHitPoints);
+void ScavTrap::guardGate() {
+	std::cout << "\033[1;31m" << _name << ">> ScavTrap " << _name << " is now in Gate keeper mode." << "\033[0m" << std::endl;
 }

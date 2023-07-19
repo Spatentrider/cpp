@@ -1,24 +1,37 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   bsp.cpp                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ffrau <ffrau@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/02 12:20:12 by ffrau             #+#    #+#             */
-/*   Updated: 2022/06/02 12:36:47 by ffrau            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Point.hpp"
 
-bool	bsp(Point const a, Point const b, Point const c, Point const point)
-{
-	bool	sign[3];
-
-	sign[0] = ((a.getX() - point.getX()) * (b.getY() - a.getY()) - (b.getX() - a.getX()) * (a.getY() - point.getY())) > 0;
-	sign[1] = ((b.getX() - point.getX()) * (c.getY() - b.getY()) - (c.getX() - b.getX()) * (b.getY() - point.getY())) > 0;
-	sign[2] = ((c.getX() - point.getX()) * (a.getY() - c.getY()) - (a.getX() - c.getX()) * (c.getY() - point.getY())) > 0;
-
-	return sign[0] == sign[1] && sign[1] == sign[2];
+static Fixed area(Point const a, Point const b, Point const c) {
+	Fixed x1 = a.getX() - c.getX();
+	Fixed y1 = a.getY() - c.getY();
+	Fixed x2 = b.getX() - c.getX();
+	Fixed y2 = b.getY() - c.getY();
+	return x1 * y2 - x2 * y1;
 }
+
+bool bsp(Point const a, Point const b, Point const c, Point const point)
+{
+	Fixed abcArea = area(a, b, c);
+	Fixed pabArea = area(point, a, b);
+	Fixed pbcArea = area(point, b, c);
+	Fixed pcaArea = area(point, c, a);
+
+	return (abcArea > 0 && pabArea > 0 && pbcArea > 0 && pcaArea > 0)
+		|| (abcArea < 0 && pabArea < 0 && pbcArea < 0 && pcaArea < 0);
+}
+
+/*
+area = 0.5 * |AB x AC|, where A, B, and C are the vertices of the triangle,
+and AB and AC are the vectors defining two sides of the triangle.
+
+When a point P is inside the triangle, the area of the triangle PAB,
+whose base is the side AB, is positive. Similarly, the areas of triangles PBC and PCA are also positive.
+Therefore, if a point is inside the triangle, all three triangle areas must have the same sign (positive).
+
+Conversely, if a point P is outside the triangle, the area of at
+least one of the triangles PAB, PBC, and PCA has a sign opposite to the other two.
+This means that at least one of the sides AB, BC, or AC must be crossed by a line
+connecting point P with one of the triangle vertices. If the area of one of the
+triangles has a sign opposite to the other two, it means that the cross product
+has an opposite sign, and therefore the value returned by
+the function will be false (i.e. the point is not inside the triangle).
+*/
